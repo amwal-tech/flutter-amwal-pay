@@ -1,0 +1,11 @@
+platform :ios, '15.0'
+
+target 'Runner' do
+  use_frameworks!
+  project '../example/ios/Runner.xcodeproj'
+
+  # Add your dependencies here
+  pod 'AmwalPayment', '~> 1.0.6'
+  # Add any other dependencies needed for your project
+
+end
