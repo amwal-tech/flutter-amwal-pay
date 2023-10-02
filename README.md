@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  AmwalPayPlugin: ^1.0.0
+  amwal_pay: ^0.0.1
 ```
 
 ## iOS pod install
@@ -24,27 +24,18 @@ Follow these steps to install the necessary dependencies for iOS:
 
 1 Open the ios directory in your Flutter project.
 
-2 Open the Podfile in a text editor.
-
-3 Locate the line that specifies the platform and version, and set it to the minimum supported version:
-
-```
-platform :ios, '16.0'
-```
-4 Save the changes to the Podfile.
-
-5 Open a terminal and navigate to the ios directory of your Flutter project:
+2 Open a terminal and navigate to the ios directory of your Flutter project:
 
 ```
 cd ios
 ```
-6 Run the following command to deintegrate any existing CocoaPods dependencies:
+3 Run the following command to deintegrate any existing CocoaPods dependencies:
 
 ```
 pod deintegrate
 ```
 
-7 Once the deintegration is complete, run the following command to install the dependencies:
+4 Once the deintegration is complete, run the following command to install the dependencies:
 ```
 pod install
 ```
@@ -55,26 +46,9 @@ This command will download and install the necessary CocoaPods dependencies for 
 
 Follow these steps to install the necessary dependencies for Android:
 
-1. Install Amwal Payment SDK in Android
+1. Associate your app with [Amwal's Digital Asset Links.](https://docs.amwal.tech/docs/setup)
 
-Add the following lines to the dependencies section in app/build.gradle
-
-```
-apply plugin: 'com.android.application'
-
-android { ... }
-
-dependencies {
-  // ...
-
-  // Amwal Payment SDK
-implementation "tech.amwal.payment:payment:1.0.0-beta07"
-}
-```
-
-2. Associate your app with [Amwal's Digital Asset Links.](https://docs.amwal.tech/docs/setup)
-
-3. Set minSdkVersion 23
+2. Set minSdkVersion 23
 
 ```
 defaultConfig {
@@ -89,7 +63,6 @@ defaultConfig {
 4. Lastly, update the MainActivity class in your Android project for the Flutter plugin
 
 In the file `app/src/main/kotlin/../MainActivity`, update the import statement & class declaration :
-
 
 ```
 // Before:
@@ -119,7 +92,7 @@ class MainActivity: FlutterFragmentActivity() {
 import necessary package.
 
 ```
-import import 'package:amwal_pay/amwal_pay.dart';
+import 'package:amwal_pay/amwal_pay.dart';
 ```
 Create an instance of the AmwalPay class, providing the required parameters:
 
@@ -133,7 +106,7 @@ AmwalPay amwalPay = AmwalPayBuilder('your_merchant_id')
 Start a payment transaction by calling the startPayment method with the desired amount:
 
 ```
-String paymentResult = (await amwal.startPayment(amount))!;
+String paymentResult = await amwal.startPayment(amount);
 ```
 
 The startPayment method returns a Future that resolves to a String representing the payment result. You can handle the result according to your application's needs.
