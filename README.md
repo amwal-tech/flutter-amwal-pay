@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  amwal_pay: ^0.0.2
+  amwal_pay: ^0.0.3
 ```
 
 ## iOS pod install

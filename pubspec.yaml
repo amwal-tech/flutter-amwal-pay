@@ -1,6 +1,6 @@
 name: amwal_pay
 description: The AmwalPay Flutter SDK provides a convenient way to integrate AmwalPay payment functionality into your Flutter applications. This documentation will guide you through the process of setting up and using the AmwalPay class.
-version: 0.0.2
+version: 0.0.3
 homepage:
 
 environment:

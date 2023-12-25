@@ -16,66 +16,67 @@ import tech.amwal.payment.PaymentSheetResult
 import tech.amwal.payment.dsl.paymentSheet
 
 class AmwalPayPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-  private lateinit var channel: MethodChannel
-  private var activity: ComponentActivity? = null
-  private lateinit var payment: PaymentSheet
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "amwal_pay")
-    channel.setMethodCallHandler(this)
-  }
-
-
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method.equals("startPayment")) {
-      val merchantId = call.argument<String>("merchantId");
-      val phoneNumber = call.argument<String>("phoneNumber");
-      val countryCode = call.argument<String>("countryCode");
-      val amount = call.argument<Double>("amount");
-      if (merchantId != null &&
-        phoneNumber != null &&
-        countryCode != null &&
-        amount != null &&
-        activity != null
-      ) {
-        payment = PaymentSheet(
-          activity = activity!!,
-          merchantId = merchantId,
-          config = PaymentSheet.Config.Builder().build()
-        ) {
-          when (it) {
-            PaymentSheetResult.Canceled -> result.error("1", "Payment Canceled", "")
-            PaymentSheetResult.Completed -> result.success("")
-            is PaymentSheetResult.Failed -> result.error(
-              "2",
-              it.error.message,
-              it.toString()
-            )
-          }
-        }
-        payment.show(PaymentSheet.Amount(total = amount.toFloat()))
-      }
-    } else {
-      result.notImplemented();
+    private lateinit var channel: MethodChannel
+    private var activity: ComponentActivity? = null
+    private lateinit var payment: PaymentSheet
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "amwal_pay")
+        channel.setMethodCallHandler(this)
     }
-  }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
-  }
 
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    this.activity = binding.activity as ComponentActivity
-  }
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        if (call.method.equals("startPayment")) {
+            val merchantId = call.argument<String>("merchantId");
+            val phoneNumber = call.argument<String>("phoneNumber");
+            val countryCode = call.argument<String>("countryCode");
+            val amount = call.argument<Double>("amount");
+            if (merchantId != null &&
+                    phoneNumber != null &&
+                    countryCode != null &&
+                    amount != null &&
+                    activity != null
+            ) {
+                payment = PaymentSheet(
+                        activity = activity!!,
+                        merchantId = merchantId,
+                        config = PaymentSheet.Config.Builder().build()
+                ) {
+                    when (it) {
+                        PaymentSheetResult.Canceled -> result.error("1", "Payment Canceled", "Canceled by the user")
+                        is PaymentSheetResult.Failed -> result.error(
+                                "2",
+                                it.error.message,
+                                it.toString()
+                        )
 
-  override fun onDetachedFromActivityForConfigChanges() {
+                        is PaymentSheetResult.Success -> result.success(it.transactionId)
+                    }
+                }
+                payment.show(PaymentSheet.Amount(total = amount.toFloat()))
+            }
+        } else {
+            result.notImplemented();
+        }
+    }
 
-  }
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
+    }
 
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-    this.activity = binding.activity as ComponentActivity
-  }
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        this.activity = binding.activity as ComponentActivity
+    }
 
-  override fun onDetachedFromActivity() {
+    override fun onDetachedFromActivityForConfigChanges() {
 
-  }
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        this.activity = binding.activity as ComponentActivity
+    }
+
+    override fun onDetachedFromActivity() {
+
+    }
 }
