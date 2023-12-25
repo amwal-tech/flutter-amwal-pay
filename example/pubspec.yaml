@@ -1,5 +1,5 @@
 name: amwal_pay_example
-description: Demonstrates how to use the amwal_pay plugin.
+description: The AmwalPay Flutter SDK provides a convenient way to integrate AmwalPay payment functionality into your Flutter applications. This documentation will guide you through the process of setting up and using the AmwalPay class.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
