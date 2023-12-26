@@ -12,7 +12,6 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
             if call.method == "startPayment" {
-                let currency = "SAR"
                 let vat = 0.0
                 guard let arguments = call.arguments as? [String: Any],
                   let amount = arguments["amount"] as? Double,
@@ -22,7 +21,7 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
                 return
             }
                 let paymentView = AmwalPaymentView(
-                    currency: currency,
+                    currency: .SAR,
                     amount: Double(amount),
                     vat: Double(vat),
                     merchantId: merchantId) {transactionId in

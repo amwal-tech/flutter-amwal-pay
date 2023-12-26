@@ -8,14 +8,11 @@
 
 Integrate Amwal’s prebuilt payment Sheet into the checkout of your iOS app with the PaymentSheet DSL friendly APIs.
 
-> 📘 Associate your iOS app in our merchant dashboard
-> 
-> If you haven't done this already, please refer back to [this guide](https://docs.amwal.tech/docs/setup#workflow-with-amwal)
 # Screenshots
 <p align="center">
-  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/f85a4aa0-f3d8-4b98-a3e1-6eb7eb55db4e" alt="Image 1" width="300"/> 
-  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/2a6650af-df62-4721-b106-6c663af01ee4" alt="Image 2" width="300"/> 
-  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/cf0499c2-ba11-4b21-be43-1fa37539714a" alt="Image 3" width="300"/>
+  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/f85a4aa0-f3d8-4b98-a3e1-6eb7eb55db4e" alt="Image 1" width="250"/> 
+  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/2a6650af-df62-4721-b106-6c663af01ee4" alt="Image 2" width="250"/> 
+  <img src="https://github.com/amwal-tech/amwal-ios-sdk/assets/10992377/cf0499c2-ba11-4b21-be43-1fa37539714a" alt="Image 3" width="250"/>
 </p>
 
 # Table of Contents
@@ -37,23 +34,35 @@ Integrate Amwal’s prebuilt payment Sheet into the checkout of your iOS app wit
 # Intoduction
 AmwalPayment SDK offers the flexibility to use pass keys for enhanced security during the payment process. Pass keys provide an additional layer of protection by replacing traditional OTPs (One-Time Passwords) and ensuring a secure payment experience. Here's how you can generate and integrate pass keys into the Payment Sheet
 
-<a name="quick-start-guide"></a>
-# Quick Start Guide
-<a name="install-sdk"></a>
 ## Install SDK
-<a name="swift-package-manager-spm"></a>
-### Swift Package Manager (SPM)
-Add the following line to your `Package.swift` file's dependencies:
 
+### Swift Package Manager (SPM)
+
+Add the following line to your `Package.swift` file's dependencies:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/amwal/payment-sdk-ios.git", from: "0.1.2")
+    .package(url: "https://github.com/amwal/payment-sdk-ios.git", from: "1.0.7")
 ]
 ```
 ### CocoaPods
 ```swift
-pod 'AmwalPayment', '~> 0.1.2'
+pod 'AmwalPayment', '~> 1.0.7'
 ```
+## ⚠️ Important : Add AmwalPay in your associated domains
+- In Xcode > Choose your **target**
+- Head to **Signing & Capabilities**
+- Press **+ Capability**
+- Search and choose **Associated Domains**
+- In the newly added Associated Domains section add
+  `webcredentials:pay.sa.amwal.tech`
+  
+## ⚠️ Important : Add your Bundle Identifier and iOS App Id Prefix to Merchant dashboard
+- Head to your [Merchant dashboard settings](https://merchant.sa.amwal.tech/settings)
+- Choose **IOS SETTINGS** tab
+- Select your **Store**
+- Add your iOS App Id Prefix aka Your team Id
+- Add your iOS Bundle Id
+- Click **Save** and you should see "iOS Settings Updated" message ✅
 
 <a name="initialize-payment-sheet"></a>
 ## 2. Initialize the PaymentSheet
@@ -65,11 +74,11 @@ you can use in SwiftUI with `.sheet` and UIKit with  `modalPresentationStyle`.
 2-  `initialize View`
 ```swift
         AmwalPaymentView(
-            currency: "SAR",
+            currency: .SAR,
             amount: 110,
             vat: 20,
             merchantId: "merchantId",
-            completion: {
+            completion: { transactionId in
                 isPresented = false
             }
         )
@@ -77,8 +86,9 @@ you can use in SwiftUI with `.sheet` and UIKit with  `modalPresentationStyle`.
 <a name="showing-payment-sheet"></a>
 
 ## 3. Showing Payment Sheet
+- you can use our button direct to show payment sheet or use a sheet view  
 <a name="swiftUI"></a>
-## SwiftUI
+## SwiftUI Sheet
 ```swift
 import SwiftUI
 import AmwalPay
@@ -102,21 +112,103 @@ struct ContentView: View {
         .sheet(isPresented: $isPresented) {
             
             AmwalPaymentView(
-                currency: "SAR",
+                currency: .SAR,
                 amount: 110,
                 vat: 20,
                 merchantId: "merchantId",
-                completion: {
+                completion: { transactionId in
                 isPresented = false
             })
         }
     }
 }
 ```
+## SwiftUI AmwalPayButton
+```swift
+import AmwalPay
+import SwiftUI
+enum PayResult: String {
+    case success
+    case failure
+}
+
+struct ContentView: View {
+    @State var isPresented: Bool = false
+    @State var amount: String = "110"
+    @State var vat: String = "20"
+    @State var merchantId: String = "sandbox-amwal-3db24246-8d09-4f78-a3eb-0d4b8b03bd4b"
+    @State var transactionID: String = ""
+    @State var result: PayResult?
+    var body: some View {
+        VStack {
+            Text("Enter your values to test")
+                .font(.largeTitle)
+            HStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Amount:")
+                    Text("Vat:")
+                }
+                VStack(spacing: 5) {
+                    TextField("Amount", text: $amount)
+                        .keyboardType(.numberPad)
+                        .textFieldStyle(.roundedBorder)
+                    TextField("Vat", text: $vat)
+                        .keyboardType(.numberPad)
+                        .textFieldStyle(.roundedBorder)
+                }
+            }
+            .padding([.top, .horizontal])
+            VStack(alignment: .leading) {
+                Text("MerchantID")
+                TextField("MerchantID", text: $merchantId)
+                    .keyboardType(.default)
+                    .textFieldStyle(.roundedBorder)
+            }
+            .padding([.bottom, .horizontal])
+            Text("TransactionID: \(transactionID)")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+            HStack {
+                Image(systemName: "circle.fill")
+                    .foregroundColor(
+                        result == .success
+                            ? .green
+                            : result == nil
+                            ? .gray
+                            : .red
+                    )
+                Text(result?.rawValue ?? "none")
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer()
+            AmwalPayButton(
+                currency: .SAR,
+                amount: Double(amount) ?? 110,
+                vat: Double(vat) ?? 20,
+                merchantId: merchantId
+            ) { status in
+                switch status {
+                case let .success(transactionId):
+                    self.transactionID = transactionId
+                    result = .success
+                case let .fail(error):
+                    result = .failure
+                    print(error)
+                }
+            }
+        }
+        .padding(.bottom)
+    }
+}
+
+```
+
 <a name="uikit"></a>
-## UIKit
+## UIKit Sheet
 ```swift
 import UIKit
+import SwiftUI
 import AmwalPay
 
 class ViewController: UIViewController {
@@ -130,11 +222,11 @@ class ViewController: UIViewController {
     
     func presentPaymentView() {
         let paymentView = AmwalPaymentView(
-            currency: "SAR",
+            currency: .SAR,
             amount: 110,
             vat: 20,
             merchantId: "merchantId",
-            completion: { [weak self] in
+            completion: { [weak self] transactionId in
                 self?.dismissPayment()
 
             })
@@ -143,10 +235,61 @@ class ViewController: UIViewController {
     }
 }
 ```
+## UIKIT AmwalPayButton
+```swift
+import AmwalPay
+import SwiftUI
+import UIKit
+
+class ViewController: UIViewController {
+    lazy var payButton: UIView = {
+        let button =  AmwalPayButton(
+            currency: .SAR,
+            amount:  110,
+            vat:  20,
+            merchantId: "sandbox-amwal-3db24246-8d09-4f78-a3eb-0d4b8b03bd4b"
+        ) { status in
+            switch status {
+            case let .success(transactionId):
+                debugPrint(transactionId)
+            case let .fail(error):
+                debugPrint(error)
+            }
+        }
+        let ButtonView = UIHostingController(rootView: button)
+        return ButtonView.view
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(resource: .custom)
+        setupConstrains()
+    }
+
+    private func setupConstrains() {
+        let stackView = UIStackView(arrangedSubviews: [payButton])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+
+        // Set constraints
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            payButton.heightAnchor.constraint(equalToConstant: 60),
+        ])
+
+    }
+}
+```
 <a name="listen-payment-results"></a>
 
 ## 4. Listen for results
-we are handled all errors closure for success only
+we are return status success with transaction id and fail with error
 ## Tips
 🚧 Securely store your keys
 

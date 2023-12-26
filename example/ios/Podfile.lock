@@ -1,8 +1,8 @@
 PODS:
   - amwal_pay (0.0.1):
-    - AmwalPayment (~> 1.0.6)
+    - AmwalPayment (~> 1.0.10)
     - Flutter
-  - AmwalPayment (1.0.6)
+  - AmwalPayment (1.0.10)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
@@ -25,11 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  amwal_pay: bb6c6ca5dc0bdd300e25fb73a6a61398c108c1ed
-  AmwalPayment: 894c1d4781b85947a2882a06bf6497bf26478f47
+  amwal_pay: 372a48b28c56a1545e6c9362a99d522e8628bf51
+  AmwalPayment: 28dfc776ac05187c22f3640f15449f1faa327c9c
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
 
 PODFILE CHECKSUM: 02bb5a7c4b0f2ac21fcca85eb68b4430d9d46991
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3
