@@ -1,6 +1,5 @@
-
+import 'package:flutter/material.dart';
 import 'amwal_pay_method_channel.dart';
-
 
 class AmwalPay {
   final String _merchantId;
@@ -47,5 +46,48 @@ class AmwalPayBuilder {
       throw Exception("Merchant Id has to be provided");
     }
     return AmwalPay(_merchantId, _countryCode, _phoneNumber);
+  }
+}
+
+/// AmwalPayWidget is a widget that can be used to start the payment process
+/// without the need to create an instance of AmwalPay class.
+class AmwalPayWidget extends StatefulWidget {
+  final String merchantId;
+  final double amount;
+  final ValueChanged<String> onPaymentFinished;
+
+  AmwalPayWidget
+      ({Key? key,
+      required this.merchantId,
+      required this.amount,
+      required this.onPaymentFinished})
+      : super(key: key);
+
+  @override
+  State<AmwalPayWidget> createState() => _AmwalPayWidgetState();
+}
+
+class _AmwalPayWidgetState extends State<AmwalPayWidget> {
+  late AmwalPay _amwalPay;
+
+  @override
+  void initState() {
+    super.initState();
+    _amwalPay = AmwalPayBuilder(widget.merchantId).build();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+        ),
+      onPressed: () async {
+       _amwalPay.start(widget.amount).then((value) {
+         widget.onPaymentFinished(value!);
+       });
+      },
+      child: const Text("Quick Checkout by AmwalPay"),
+    );
   }
 }

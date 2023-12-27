@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // create a double state variable to hold the amount
   @override
   void initState() {
     super.initState();
@@ -21,20 +22,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    AmwalPay amwalPay = AmwalPayBuilder("sandbox-amwal-e53fe88e-0896-4f57-98b4-a8907f73c0c6")
-        .countryCode("countryCode")
-        .phoneNumber("phoneNumber")
-        .build();
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: ElevatedButton( onPressed: () async {
-            await amwalPay.start(100.0);
-          },child: const Text("run"),),
+          child: AmwalPayWidget(
+            merchantId: "merchantId",
+            amount: 10.0,
+            onPaymentFinished: (String value) {
+              print(value);
+            },
+          ),
         ),
       ),
     );
