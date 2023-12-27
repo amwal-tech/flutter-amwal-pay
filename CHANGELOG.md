@@ -6,9 +6,13 @@
 * Upgraded Android SDK to v1.0.0-beta15
 * Improve the README.md
 
-## v0.0.3 25 Dec, 2023
+## v0.0.3 26 Dec, 2023
 * Adopting new Android SDK result handling
 
 
-## v0.0.5 25 Dec, 2023
+## v0.0.5 27 Dec, 2023
 * Updating iOS framework to 10.0.11
+
+
+## v0.0.6 27 Dec, 2023
+* Including AmwalPayWidget to the plugin

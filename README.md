@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  amwal_pay: ^0.0.5
+  amwal_pay: ^0.0.6
 ```
 
 ## iOS pod install
@@ -94,6 +94,23 @@ import necessary package.
 ```
 import 'package:amwal_pay/amwal_pay.dart';
 ```
+You can use our widget or use the plugin directly.
+
+### 1) Using the Widget
+```dart
+        body: Center(
+          child: AmwalPayWidget(
+            merchantId: 'your_merchant_id',
+            amount: 10.0,
+            onPaymentFinished: (String value) {
+              print(value);
+            },
+          ),
+        )
+```
+
+### 2) Using the flutter plugin
+
 Create an instance of the AmwalPay class, providing the required parameters:
 
 ```
@@ -113,6 +130,35 @@ The startPayment method returns a Future that resolves to a String representing 
 
 ### Example
 
+1) Using the Widget
+```dart
+import 'package:flutter/material.dart';
+import 'package:amwal_pay/amwal_pay.dart';
+//......
+//......
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: Center(
+        child: AmwalPayWidget(
+          merchantId: "merchantId",
+          amount: 10.0,
+          onPaymentFinished: (String value) {
+            print(value);
+          },
+        ),
+      ),
+    ),
+  );
+}
+
+```
+
+2) Using the plugin directly
 ```
 import 'package:flutter/material.dart';
 import 'package:amwal_pay/amwal_pay_method_channel.dart';
