@@ -1,6 +1,6 @@
 # AmwalPayment iOS SDK
-![Build Status](https://img.shields.io/travis/amwal-tech/AmwalPayment.svg?style=flat)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-blue.svg?style=flat)
+![UIKit](https://img.shields.io/badge/UIKit-blue.svg?style=flat)
 ![CocoaPods](https://img.shields.io/cocoapods/v/AmwalPayment.svg?style=flat)
 ![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)
 [![License](https://img.shields.io/cocoapods/l/AmwalPayment.svg?style=flat)](https://github.com/AmwalPayment/AmwalPayment-ios/blob/master/LICENSE)
@@ -41,12 +41,12 @@ AmwalPayment SDK offers the flexibility to use pass keys for enhanced security d
 Add the following line to your `Package.swift` file's dependencies:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/amwal/payment-sdk-ios.git", from: "1.0.7")
+    .package(url: "https://github.com/amwal/payment-sdk-ios.git", from: "1.0.11")
 ]
 ```
 ### CocoaPods
 ```swift
-pod 'AmwalPayment', '~> 1.0.7'
+pod 'AmwalPayment', '~> 1.0.11'
 ```
 ## ⚠️ Important : Add AmwalPay in your associated domains
 - In Xcode > Choose your **target**
