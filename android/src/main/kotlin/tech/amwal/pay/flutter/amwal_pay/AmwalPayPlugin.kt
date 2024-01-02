@@ -28,19 +28,33 @@ class AmwalPayPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         if (call.method.equals("startPayment")) {
             val merchantId = call.argument<String>("merchantId");
-            val phoneNumber = call.argument<String>("phoneNumber");
-            val countryCode = call.argument<String>("countryCode");
+            val phoneNumber = call.argument<String?>("phoneNumber") ?: "";
+            val countryCode = call.argument<String?>("countryCode") ?: "";
+            val refId = call.argument<String?>("refId") ?: "";
+            val orderId = call.argument<String?>("orderId") ?: "";
             val amount = call.argument<Double>("amount");
             if (merchantId != null &&
-                    phoneNumber != null &&
-                    countryCode != null &&
                     amount != null &&
                     activity != null
             ) {
+                val builder = PaymentSheet.Config.Builder()
+                if (phoneNumber.isNotEmpty()) {
+                    builder.phoneNumber(phoneNumber)
+                }
+                if (countryCode.isNotEmpty()) {
+                    builder.countryCode(countryCode)
+                }
+                if (refId.isNotEmpty()) {
+                    builder.refId(refId)
+                }
+                if (orderId.isNotEmpty()) {
+                    builder.orderId(orderId)
+                }
                 payment = PaymentSheet(
                         activity = activity!!,
                         merchantId = merchantId,
-                        config = PaymentSheet.Config.Builder().build()
+                        config = builder
+                                .build()
                 ) {
                     when (it) {
                         PaymentSheetResult.Canceled -> result.error("1", "Payment Canceled", "Canceled by the user")
