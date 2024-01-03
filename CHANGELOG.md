@@ -16,3 +16,10 @@
 
 ## v0.0.6 27 Dec, 2023
 * Including AmwalPayWidget to the plugin
+
+## v0.1.0 2 Jan, 2024
+* Supporting RefId for the payment request
+* Supporting the new AmwalPayWidget
+* Adding new Android SDK v1.0.0-beta16
+* Supporting new iOS SDK v1.0.12
+* Improve arguments validation

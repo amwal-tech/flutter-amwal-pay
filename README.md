@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  amwal_pay: ^0.0.6
+  amwal_pay: ^0.1.0
 ```
 
 ## iOS pod install
@@ -48,19 +48,7 @@ Follow these steps to install the necessary dependencies for Android:
 
 1. Associate your app with [Amwal's Digital Asset Links.](https://docs.amwal.tech/docs/setup)
 
-2. Set minSdkVersion 23
-
-```
-defaultConfig {
-        applicationId "com.example.amwal_example"
-        minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-    }
-```
-
-4. Lastly, update the MainActivity class in your Android project for the Flutter plugin
+2. Lastly, update the MainActivity class in your Android project for the Flutter plugin
 
 In the file `app/src/main/kotlin/../MainActivity`, update the import statement & class declaration :
 
@@ -102,6 +90,8 @@ You can use our widget or use the plugin directly.
           child: AmwalPayWidget(
             merchantId: 'your_merchant_id',
             amount: 10.0,
+            refId: 'your_ref_id', // optional can be null
+            orderId: 'your_order_id', // optional can be null
             onPaymentFinished: (String value) {
               print(value);
             },
@@ -114,10 +104,12 @@ You can use our widget or use the plugin directly.
 Create an instance of the AmwalPay class, providing the required parameters:
 
 ```
-AmwalPay amwalPay = AmwalPayBuilder('your_merchant_id')
-    .countryCode('your_country_code')
-    .phoneNumber('your_phone_number')
-    .build();
+    AmwalPay amwalPay = AmwalPayBuilder('your_merchant_id')
+        .countryCode('your_country_code')
+        .phoneNumber('your_phone_number')
+        .refId('your_ref_id') // optional can be null
+        .orderId('your_order_id') // optional can be null
+        .build();
 ```
 
 Start a payment transaction by calling the startPayment method with the desired amount:
@@ -127,78 +119,6 @@ String paymentResult = await amwal.startPayment(amount);
 ```
 
 The startPayment method returns a Future that resolves to a String representing the payment result. You can handle the result according to your application's needs.
-
-### Example
-
-1) Using the Widget
-```dart
-import 'package:flutter/material.dart';
-import 'package:amwal_pay/amwal_pay.dart';
-//......
-//......
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Plugin example app'),
-      ),
-      body: Center(
-        child: AmwalPayWidget(
-          merchantId: "merchantId",
-          amount: 10.0,
-          onPaymentFinished: (String value) {
-            print(value);
-          },
-        ),
-      ),
-    ),
-  );
-}
-
-```
-
-2) Using the plugin directly
-```
-import 'package:flutter/material.dart';
-import 'package:amwal_pay/amwal_pay_method_channel.dart';
-
-class AmwalPayScreen extends StatelessWidget {
-  final AmwalPay amwalPay;
-
-  const AmwalPayScreen(this.amwalPay);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('AmwalPay'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            String? paymentResult = await amwalPay.startPayment(100.0);
-            // Handle the payment result here
-          },
-          child: Text('Pay Now'),
-        ),
-      ),
-    );
-  }
-}
-
-void main() {
-  AmwalPay amwalPay = AmwalPayBuilder('your_merchant_id')
-    .countryCode('your_country_code')
-    .phoneNumber('your_phone_number')
-    .build();
-
-  runApp(MaterialApp(
-    home: AmwalPayScreen(amwalPay),
-  ));
-}
-
-```
 
 ### Conclusion
 
