@@ -23,3 +23,6 @@
 * Adding new Android SDK v1.0.0-beta16
 * Supporting new iOS SDK v1.0.12
 * Improve arguments validation
+
+## v0.1.1 8 Jan, 2024
+* Fixing SSL related security issue in the Android SDK
