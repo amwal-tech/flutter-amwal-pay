@@ -45,9 +45,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3",
+      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/flutter_lints-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_localizations",
@@ -69,7 +69,7 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/lints-2.1.1",
+      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -99,9 +99,9 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
+      "rootUri": "file:///Users/ahmedelshaer/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "sky_engine",
@@ -164,7 +164,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-01-10T16:45:31.866834Z",
+  "generated": "2024-01-10T18:26:48.171371Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

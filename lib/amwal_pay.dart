@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'amwal_pay_method_channel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class AmwalPay {
   final String _merchantId;
@@ -71,6 +69,7 @@ class AmwalPayBuilder {
 /// AmwalPayWidget is a widget that can be used to start the payment process
 /// without the need to create an instance of AmwalPay class.
 class AmwalPayWidget extends StatefulWidget {
+  final String text;
   final String merchantId;
   final double amount;
   final String? phoneNumber;
@@ -81,6 +80,7 @@ class AmwalPayWidget extends StatefulWidget {
 
   AmwalPayWidget(
       {Key? key,
+      required this.text,
       required this.merchantId,
       required this.amount,
       this.phoneNumber,
@@ -120,7 +120,7 @@ class _AmwalPayWidgetState extends State<AmwalPayWidget> {
           widget.onPaymentFinished(value!);
         });
       },
-      child: Text(AppLocalizations.of(context)!.quickCheckoutByAmwal),
+      child: Text(widget.text),
     );
   }
 }
