@@ -39,7 +39,7 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
                 vat: Double(vat),
                 merchantId: merchantId,
                 orderId: orderId,
-                refrenceId: refId
+                referenceId: refId
             ) { status in
                 // Payment completion block
                 switch status {

@@ -1,16 +1,16 @@
 PODS:
-  - AmwalPayment (1.0.12)
+  - AmwalPayment (1.1.0)
 
 DEPENDENCIES:
-  - AmwalPayment (~> 1.0.12)
+  - AmwalPayment (~> 1.1.0)
 
 SPEC REPOS:
   trunk:
     - AmwalPayment
 
 SPEC CHECKSUMS:
-  AmwalPayment: 82ec40db5de58691b0a8ae93c79554ddb89cd03a
+  AmwalPayment: 3bf5fdcf008574fe9c5a2ce8b6707d6d03a1da0e
 
-PODFILE CHECKSUM: 8fdca3d04ab193fdeff8935c826840fb07c0c5a6
+PODFILE CHECKSUM: 88a5a39e8e22974c62e1d4a15a730d0990260bf5
 
 COCOAPODS: 1.14.3

@@ -5,7 +5,7 @@ target 'Runner' do
   project '../example/ios/Runner.xcodeproj'
 
   # Add your dependencies here
-  pod 'AmwalPayment', '~> 1.0.12'
+  pod 'AmwalPayment', '~> 1.1.0'
   # Add any other dependencies needed for your project
 
 end

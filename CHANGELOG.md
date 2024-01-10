@@ -26,3 +26,12 @@
 
 ## v0.1.1 8 Jan, 2024
 * Fixing SSL related security issue in the Android SDK
+
+## v0.2.0 10 Jan, 2024
+* Fixing issue with Android Bottom Sheet State
+* Fixing issue with Android OTP doesn't send automatically when the user taps on the widget
+* Supporting localization for the Android SDK
+* Supporting localization for the iOS SDK
+* Supporting localization for AmwalPayWidget
+* Updating iOS SDK to v1.1.0
+* Updating Android SDK to v1.0.0-rc1

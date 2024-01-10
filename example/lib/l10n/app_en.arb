@@ -1,0 +1,10 @@
+{
+  "title": "Title",
+  "@title": {
+    "description": "The title text"
+  },
+  "quickCheckoutByAmwal": "Quick Checkout",
+  "@quickCheckoutByAmwal": {
+    "description": "The text for the quick checkout by Amwal"
+  }
+}

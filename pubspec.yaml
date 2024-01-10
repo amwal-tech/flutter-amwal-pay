@@ -1,6 +1,6 @@
 name: amwal_pay
 description: The AmwalPay Flutter SDK provides a convenient way to integrate AmwalPay payment functionality into your Flutter applications. This documentation will guide you through the process of setting up and using the AmwalPay class.
-version: 0.1.1
+version: 0.2.0
 homepage: https://github.com/amwal-tech/flutter-amwal-pay
 
 environment:
@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +25,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
   # This section identifies this Flutter project as a plugin project.
   # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)
   # which should be registered in the plugin registry. This is required for
