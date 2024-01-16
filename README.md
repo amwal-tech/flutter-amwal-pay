@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  amwal_pay: ^0.1.0
+  amwal_pay: ^0.3.1
 ```
 
 ## iOS pod install
@@ -92,6 +92,7 @@ You can use our widget or use the plugin directly.
             amount: 10.0,
             refId: 'your_ref_id', // optional can be null
             orderId: 'your_order_id', // optional can be null
+            language: AmwalPayLanguage.Arabic,// optional can be null 
             onPaymentFinished: (String value) {
               print(value);
             },
@@ -109,6 +110,7 @@ Create an instance of the AmwalPay class, providing the required parameters:
         .phoneNumber('your_phone_number')
         .refId('your_ref_id') // optional can be null
         .orderId('your_order_id') // optional can be null
+        .language(AmwalPayLanguage.Arabic) // optional can be null
         .build();
 ```
 

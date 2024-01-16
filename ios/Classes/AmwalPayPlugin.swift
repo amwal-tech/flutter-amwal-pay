@@ -9,25 +9,37 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
         let instance = AmwalPayPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-
+        
         if call.method == "startPayment" {
             let vat = 0.0
             guard let arguments = call.arguments as? [String: Any] else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments", details: nil))
                 return
             }
-
+            
             guard let amount = arguments["amount"] as? Double else {
                 result(FlutterError(code: "INVALID_amount", message: "Invalid amount", details: nil))
-
+                
                 return
             }
-
+            
             let refId = arguments["refId"] as? String
             let orderId = arguments["orderId"] as? String
-
+            let language = arguments["language"] as? String
+            
+            let languageOption: Language? = {
+                switch language {
+                case "Arabic":
+                    return Language.arabic
+                case "English":
+                    return Language.english
+                default:
+                    return nil
+                }
+            }()
+            
             guard let merchantId = arguments["merchantId"] as? String else {
                 result(FlutterError(code: "INVALID_merchantId", message: "Invalid merchantId", details: nil))
                 return
@@ -39,7 +51,8 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
                 vat: Double(vat),
                 merchantId: merchantId,
                 orderId: orderId,
-                referenceId: refId
+                referenceId: refId,
+                language: languageOption
             ) { status in
                 // Payment completion block
                 switch status {
@@ -54,7 +67,7 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
             let paymentViewController = UIHostingController(rootView: paymentView)
             // Present the payment view
             rootViewController?.present(paymentViewController, animated: true, completion: nil)
-
+            
         } else {
             result(FlutterMethodNotImplemented)
         }

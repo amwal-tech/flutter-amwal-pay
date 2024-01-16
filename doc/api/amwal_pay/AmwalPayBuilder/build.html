@@ -79,7 +79,8 @@
   if (_merchantId.isEmpty) {
     throw Exception(&quot;Merchant Id has to be provided&quot;);
   }
-  return AmwalPay(_merchantId, _countryCode, _phoneNumber, _refId, _orderId);
+  return AmwalPay(
+      _merchantId, _countryCode, _phoneNumber, _refId, _orderId, _language);
 }</code></pre>
 </section>
 
@@ -114,7 +115,7 @@
 <footer>
   <span class="no-break">
     amwal_pay
-      0.2.0
+      0.3.1
   </span>
 
   

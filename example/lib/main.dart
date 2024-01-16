@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
             text: AppLocalizations.of(context)?.quickCheckoutByAmwal ?? "Quick Checkout By Amwal",
             merchantId: "merchantId",
             amount: 10.0,
+            language: AmwalPayLanguage.Arabic,
             onPaymentFinished: (String value) {
               print(value);
             },

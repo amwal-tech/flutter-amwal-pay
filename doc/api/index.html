@@ -63,7 +63,7 @@
 <h2 id="installation">Installation</h2>
 <p>To use the AmwalPay Flutter SDK, add the following dependency to your project's <code>pubspec.yaml</code> file:</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  amwal_pay: ^0.1.0
+  amwal_pay: ^0.3.1
 </code></pre>
 <h2 id="ios-pod-install">iOS pod install</h2>
 <p>Follow these steps to install the necessary dependencies for iOS:</p>
@@ -117,6 +117,7 @@ class MainActivity: FlutterFragmentActivity() {
             amount: 10.0,
             refId: 'your_ref_id', // optional can be null
             orderId: 'your_order_id', // optional can be null
+            language: AmwalPayLanguage.Arabic,// optional can be null 
             onPaymentFinished: (String value) {
               print(value);
             },
@@ -130,6 +131,7 @@ class MainActivity: FlutterFragmentActivity() {
         .phoneNumber('your_phone_number')
         .refId('your_ref_id') // optional can be null
         .orderId('your_order_id') // optional can be null
+        .language(AmwalPayLanguage.Arabic) // optional can be null
         .build();
 </code></pre>
 <p>Start a payment transaction by calling the startPayment method with the desired amount:</p>
@@ -202,7 +204,7 @@ class MainActivity: FlutterFragmentActivity() {
 <footer>
   <span class="no-break">
     amwal_pay
-      0.2.0
+      0.3.1
   </span>
 
   

@@ -32,6 +32,7 @@ class AmwalPayPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val countryCode = call.argument<String?>("countryCode") ?: "";
             val refId = call.argument<String?>("refId") ?: "";
             val orderId = call.argument<String?>("orderId") ?: "";
+            val language = call.argument<String?>("language") ?: "";
             val amount = call.argument<Double>("amount");
             if (merchantId != null &&
                     amount != null &&
@@ -49,6 +50,13 @@ class AmwalPayPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
                 if (orderId.isNotEmpty()) {
                     builder.orderId(orderId)
+                }
+                if (language.isNotEmpty()) {
+                    when(language){
+                        "Arabic" -> builder.language(PaymentSheet.Language.Arabic)
+                        "English" -> builder.language(PaymentSheet.Language.English)
+                        else -> builder.language(PaymentSheet.Language.English)
+                    }
                 }
                 payment = PaymentSheet(
                         activity = activity!!,

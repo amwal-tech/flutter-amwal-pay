@@ -35,3 +35,11 @@
 * Supporting localization for AmwalPayWidget
 * Updating iOS SDK to v1.1.0
 * Updating Android SDK to v1.0.0-rc1
+
+
+## v0.2.1 11 Jan, 2024
+* Updating Android SDK to v1.0.0-rc3
+* Supporting an option to change the language of the widget explicitly
+
+## v0.3.1 15 Jan, 2024
+* Fix language issue in the iOS SDK
