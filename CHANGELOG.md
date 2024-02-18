@@ -43,3 +43,18 @@
 
 ## v0.3.1 15 Jan, 2024
 * Fix language issue in the iOS SDK
+
+## v0.3.2 23 Jan, 2024
+* Fix webView issue in Production environment
+* Update Android to v1.0.0-rc4
+
+## v0.3.3 31 Jan, 2024
+* Hide webView Logs in Production environment
+* Update Android to v1.0.0-rc5
+
+## v0.3.4 31 Jan, 2024
+* Fixing regressions in Production environment
+* Update Android to v1.0.0-rc6
+
+## v0.4.0 7 Feb, 2024
+* Adding new phoneNumber feature to support the new AmwalPayWidget

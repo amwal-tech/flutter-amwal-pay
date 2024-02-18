@@ -28,7 +28,8 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
             let refId = arguments["refId"] as? String
             let orderId = arguments["orderId"] as? String
             let language = arguments["language"] as? String
-            
+            let phoneNumber = arguments["phoneNumber"] as? String
+            let countryCode = arguments["countryCode"] as? String
             let languageOption: Language? = {
                 switch language {
                 case "Arabic":
@@ -45,25 +46,35 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
                 return
             }
             let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-            let paymentView = AmwalPaymentView(
-                currency: .SAR,
-                amount: Double(amount),
-                vat: Double(vat),
-                merchantId: merchantId,
-                orderId: orderId,
-                referenceId: refId,
-                language: languageOption
-            ) { status in
-                // Payment completion block
-                switch status {
-                case let .success(transactionId):
-                    result(transactionId)
-                case let .fail(error):
-                    result(FlutterError(code: "payment failed", message: "", details: error))
-                    print(error)
+            var builder: PaymentRequestBuilder {
+                    let builder: PaymentRequestBuilder = .init()
+                        .setCurrency(.SAR)
+                        .setAmount(Double(amount) ?? 0.0)
+                        .setVat(Double(vat) ?? 0.0)
+                        .setMerchantId(merchantId)
+                        .setOrderId(orderId)
+                        .setReferenceId(refId)
+                        .setLanguage(languageOption)
+                        .setUserInfo(
+                            .init(
+                                phoneNumber: phoneNumber,
+                                email: nil
+                            )
+                        )
+                        .setCompletion { status in
+                         // Payment completion block
+                         switch status {
+                         case let .success(transactionId):
+                             result(transactionId)
+                         case let .fail(error):
+                             result(FlutterError(code: "payment failed", message: "", details: error))
+                             print(error)
+                         }
+                         rootViewController?.dismiss(animated: true)
+                        }
+                    return builder
                 }
-                rootViewController?.dismiss(animated: true)
-            }
+            let paymentView = AmwalPaymentView(paymentRequestBuilder: builder)
             let paymentViewController = UIHostingController(rootView: paymentView)
             // Present the payment view
             rootViewController?.present(paymentViewController, animated: true, completion: nil)
