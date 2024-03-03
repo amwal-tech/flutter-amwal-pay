@@ -43,14 +43,29 @@ class _MyAppState extends State<MyApp> {
             merchantId: "merchantId",
             amount: 10.0,
             phoneNumber: "phoneNumber",// has to be full phone number with country code ex +201234567890
-            countryCode: "countryCode",// has to be country code ex +20
             language: AmwalPayLanguage.Arabic,
-            onPaymentFinished: (String value) {
-              print(value);
+            onPaymentFinished: (TransactionStatus status) {
+            handleTransactionStatus(status);
             },
           ),
         ),
       ),
     );
+  }
+
+  void handleTransactionStatus(TransactionStatus status) {
+    switch (status.type) {
+      case TransactionStatusType.success:
+      // Cast to specific class to access the transaction ID or other relevant info.
+        print('Transaction Success with ID: ${(status as TransactionSuccess).transactionId}');
+        break;
+      case TransactionStatusType.failure:
+      // Cast and access specific failure details.
+        print('Transaction Failed. ${(status as TransactionFailure)}, Message: ${status.message}');
+        break;
+      case TransactionStatusType.cancel:
+        print('Transaction Cancelled');
+        break;
+    }
   }
 }

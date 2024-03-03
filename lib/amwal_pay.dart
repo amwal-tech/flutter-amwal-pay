@@ -27,7 +27,7 @@ class AmwalPay {
   AmwalPay(this._merchantId, this._countryCode, this._phoneNumber, this._refId,
       this._orderId, this._language);
 
-  Future<String?> start(double amount) async {
+  Future<TransactionStatus> start(double amount) async {
     return await _methodChannel.startPayment(_argumentAdapter(amount));
   }
 
@@ -43,6 +43,38 @@ class AmwalPay {
     };
   }
 }
+
+enum TransactionStatusType {
+  success,
+  failure,
+  cancel,
+}
+
+// Define a base class for transaction status.
+abstract class TransactionStatus {
+  final TransactionStatusType type;
+
+  TransactionStatus(this.type);
+}
+
+// Define a class for a successful transaction, includes the transaction ID.
+class TransactionSuccess extends TransactionStatus {
+  final String transactionId;
+
+  TransactionSuccess(this.transactionId) : super(TransactionStatusType.success);
+}
+
+class TransactionFailure extends TransactionStatus {
+  final String message;
+
+  TransactionFailure(this.message)
+      : super(TransactionStatusType.failure);
+}
+
+class TransactionCancel extends TransactionStatus {
+  TransactionCancel() : super(TransactionStatusType.cancel);
+}
+
 
 class AmwalPayBuilder {
   final String _merchantId;
@@ -100,7 +132,7 @@ class AmwalPayWidget extends StatefulWidget {
   final String? orderId;
   final AmwalPayLanguage? language;
 
-  final ValueChanged<String> onPaymentFinished;
+  final ValueChanged<TransactionStatus> onPaymentFinished;
 
   AmwalPayWidget(
       {Key? key,
@@ -143,7 +175,7 @@ class _AmwalPayWidgetState extends State<AmwalPayWidget> {
       ),
       onPressed: () async {
         _amwalPay.start(widget.amount).then((value) {
-          widget.onPaymentFinished(value!);
+          widget.onPaymentFinished(value);
         });
       },
       child: Text(widget.text),

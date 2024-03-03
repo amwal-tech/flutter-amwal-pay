@@ -65,10 +65,12 @@ public class AmwalPayPlugin: NSObject, FlutterPlugin {
                          // Payment completion block
                          switch status {
                          case let .success(transactionId):
-                             result(transactionId)
-                         case let .fail(error):
-                             result(FlutterError(code: "payment failed", message: "", details: error))
+                             result("code:1, transactionId:" + transactionId)
+                         case let .fail(error , id):
+                             result("code:-1, werror:" + error)
                              print(error)
+                         @unknown default:
+                             result("code:-1, error:Unknown issue happened")
                          }
                          rootViewController?.dismiss(animated: true)
                         }

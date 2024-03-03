@@ -17,9 +17,9 @@ void main() {
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
     final AmwalPay plugin = AmwalPayBuilder("_merchantId").build();
-    final String? version = await plugin.start(20);
+    final TransactionStatus version = await plugin.start(20);
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+    expect(TransactionStatusType.success == version, true);
   });
 }

@@ -58,3 +58,19 @@
 
 ## v0.4.0 7 Feb, 2024
 * Adding new phoneNumber feature to support the new AmwalPayWidget
+
+## v0.5.0 26 Feb, 2024
+* Update Android to v1.0.0-rc8
+* OTP doesn't redirect to transaction status while performing Quest Checkout.
+* Used Google's International Phone Number Validation Library.
+* Fixed country code caching and validation.
+* Show API call error in PhoneNumberScreen.
+* Deprecated passed countryCode configuration in favor of the phoneNumber parameter.
+* Fix transaction status mirroring to the correct values.
+* Now the developers will get a runtime error if the autofill phoneNumber is not valid.
+
+
+## v0.6.0 3 March, 2024
+* Update Android to v1.0.0-rc9
+* Fix status issue with Android doesn't return error status.
+* Added new API changes, now after the payment is done, there is a new return type `TransactionStatus`, which will help developers do better error handling, check [Readme](/README.md) for more details.

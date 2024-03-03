@@ -65,14 +65,12 @@ class AmwalPayPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                                 .build()
                 ) {
                     when (it) {
-                        PaymentSheetResult.Canceled -> result.error("1", "Payment Canceled", "Canceled by the user")
-                        is PaymentSheetResult.Failed -> result.error(
-                                "2",
-                                it.error.message,
-                                it.toString()
+                        PaymentSheetResult.Canceled -> result.success("code:0, error:Payment Canceled by the user")
+                        is PaymentSheetResult.Failed -> result.success(
+                                "code:-1, error:${it.error.message}"
                         )
 
-                        is PaymentSheetResult.Success -> result.success(it.transactionId)
+                        is PaymentSheetResult.Success -> result.success("code:1, transactionId:${it.transactionId}")
                     }
                 }
                 payment.show(PaymentSheet.Amount(total = amount.toFloat()))

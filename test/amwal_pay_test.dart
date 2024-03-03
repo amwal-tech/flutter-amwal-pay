@@ -11,7 +11,7 @@ class MockAmwalPayPlatform
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<String?> startPayment(Map<String, dynamic> args) => Future.value('42');
+  Future<TransactionStatus> startPayment(Map<String, dynamic> args) => Future.value(TransactionSuccess("42"));
 
   void main() {
     final AmwalPayPlatform initialPlatform = AmwalPayPlatform.instance;

@@ -15,7 +15,7 @@ To use the AmwalPay Flutter SDK, add the following dependency to your project's 
 
 ```yaml
 dependencies:
-  amwal_pay: ^0.4.0
+  amwal_pay: ^0.6.0
 ```
 
 ## iOS pod install
@@ -90,11 +90,24 @@ You can use our widget or use the plugin directly.
           child: AmwalPayWidget(
             merchantId: 'your_merchant_id',
             amount: 10.0,
+            phoneNumber: "your_phone_number", // has to be full phone number with country code ex +201234567890
             refId: 'your_ref_id', // optional can be null
             orderId: 'your_order_id', // optional can be null
             language: AmwalPayLanguage.Arabic,// optional can be null 
-            onPaymentFinished: (String value) {
-              print(value);
+            onPaymentFinished: (TransactionStatus status) {
+                switch (status.type) {
+                    case TransactionStatusType.success:
+                    // Cast to specific class to access the transaction ID or other relevant info.
+                    print('Transaction Success with ID: ${(status as TransactionSuccess).transactionId}');
+                    break;
+                    case TransactionStatusType.failure:
+                    // Cast and access specific failure details.
+                    print('Transaction Failed. ${(status as TransactionFailure)}, Message: ${status.message}');
+                    break;
+                    case TransactionStatusType.cancel:
+                    print('Transaction Cancelled');
+                    break;
+                }
             },
           ),
         )
@@ -106,7 +119,6 @@ Create an instance of the AmwalPay class, providing the required parameters:
 
 ```
     AmwalPay amwalPay = AmwalPayBuilder('your_merchant_id')
-        .countryCode('your_country_code')
         .phoneNumber('your_phone_number')
         .refId('your_ref_id') // optional can be null
         .orderId('your_order_id') // optional can be null
@@ -117,7 +129,21 @@ Create an instance of the AmwalPay class, providing the required parameters:
 Start a payment transaction by calling the startPayment method with the desired amount:
 
 ```
-String paymentResult = await amwal.startPayment(amount);
+TransactionStatus status = await amwal.startPayment(amount);
+
+ switch (status.type) {
+      case TransactionStatusType.success:
+      // Cast to specific class to access the transaction ID or other relevant info.
+        print('Transaction Success with ID: ${(status as TransactionSuccess).transactionId}');
+        break;
+      case TransactionStatusType.failure:
+      // Cast and access specific failure details.
+        print('Transaction Failed. ${(status as TransactionFailure)}, Message: ${status.message}');
+        break;
+      case TransactionStatusType.cancel:
+        print('Transaction Cancelled');
+        break;
+    }
 ```
 
 The startPayment method returns a Future that resolves to a String representing the payment result. You can handle the result according to your application's needs.

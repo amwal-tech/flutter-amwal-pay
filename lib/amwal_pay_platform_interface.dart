@@ -1,5 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'amwal_pay.dart';
 import 'amwal_pay_method_channel.dart';
 
 abstract class AmwalPayPlatform extends PlatformInterface {
@@ -23,7 +24,7 @@ abstract class AmwalPayPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> startPayment(Map<String, dynamic> args) {
+  Future<TransactionStatus> startPayment(Map<String, dynamic> args) {
     throw UnimplementedError('startPayment() has not been implemented.');
   }
 }
